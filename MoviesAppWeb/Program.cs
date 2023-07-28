@@ -11,12 +11,12 @@ logger.Debug("init main");
 
 try
 {
+
     var builder = WebApplication.CreateBuilder(args);
 
-    // Add services to the container.
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-    LogManager.Configuration.Variables["connectionString"] = connectionString;
+    //LogManager.Configuration.Variables["connectionString"] = connectionString;
 
 
     builder.Services.AddDbContext<ApplicationDbContext>(options =>

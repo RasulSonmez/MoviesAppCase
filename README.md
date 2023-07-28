@@ -1,6 +1,16 @@
 
 # Movie Web App - c# .NET CORE 6 
 
+ Within the application;
+- Fetching all movies
+- Add a movie
+- Movie deletion
+- Film editing
+- Identity Auth system
+- Log structure (file target, db target)
+- Error handling
+- Unauthorized 
+
 ## Dependencies
 
 - .net core 6
@@ -38,6 +48,9 @@ Configre Mssql
     ![Açıklama metni](/MoviesAppWeb/wwwroot/ssforapp/4.png)
      ![Açıklama metni](/MoviesAppWeb/wwwroot/ssforapp/5.png)
       ![Açıklama metni](/MoviesAppWeb/wwwroot/ssforapp/6.png)
+       ![Açıklama metni](/MoviesAppWeb/wwwroot/ssforapp/7.png)
+        ![Açıklama metni](/MoviesAppWeb/wwwroot/ssforapp/8.png)
+         ![Açıklama metni](/MoviesAppWeb/wwwroot/ssforapp/9.png)
 
        
 

@@ -30,5 +30,7 @@ Configre Mssql
     "DefaultConnection": "Server=Your Server;Database=Your Db;Trusted_Connection=True;MultipleActiveResultSets=true"
   },
 ```
-####Images from the application
- <img src="/MoviesAppCase/blob/master/MoviesAppWeb/wwwroot/ssforapp/1.png" width="350" title="hover text">
+###Images from the application
+
+ ![Açıklama metni](/MoviesAppWeb/wwwroot/ssforapp/1.png)
+

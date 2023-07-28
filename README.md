@@ -38,6 +38,9 @@ Configre Mssql
     ![Açıklama metni](/MoviesAppWeb/wwwroot/ssforapp/4.png)
      ![Açıklama metni](/MoviesAppWeb/wwwroot/ssforapp/5.png)
       ![Açıklama metni](/MoviesAppWeb/wwwroot/ssforapp/6.png)
+       ![Açıklama metni](/MoviesAppWeb/wwwroot/ssforapp/7.png)
+        ![Açıklama metni](/MoviesAppWeb/wwwroot/ssforapp/8.png)
+         ![Açıklama metni](/MoviesAppWeb/wwwroot/ssforapp/9.png)
 
        
 

@@ -1,6 +1,16 @@
 
 # Movie Web App - c# .NET CORE 6 
 
+ Within the application;
+- Fetching all movies
+- Add a movie
+- Movie deletion
+- Film editing
+- Identity Auth system
+- Log structure (file target, db target)
+- Error handling
+- Unauthorized 
+
 ## Dependencies
 
 - .net core 6

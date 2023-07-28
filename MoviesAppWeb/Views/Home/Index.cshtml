@@ -1,0 +1,69 @@
+﻿@using MoviesAppWeb.Helper
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+
+@model IPagedList<Entities.Models.Movie>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (Model.Count == 0)
+{
+
+
+    <tr>
+        <td colspan="7">
+            <p>No movie yet</p>
+        </td>
+    </tr>
+}
+else
+{
+    <section class="container">
+        <h1>Last movies</h1>
+        <div class="row">
+
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-3 mb-3 d-flex align-items-stretch">
+                    <div class="card">
+                        <img src="@item.CoverImageFilePath" class="card-img-top" alt="cover-img" style="height:300px;">
+                        <div class="card-body">
+                            @{
+                                int maxLength = 40;
+                            }
+
+
+                            <h5 class="card-title">@StringHelper.Truncate(item.Title, maxLength)</h5>
+                            <p class="card-text"> @StringHelper.Truncate(item.Summary, maxLength) ...</p>
+                            <p class="card-text"> <span>Release Date:</span>  @Convert.ToDateTime(item.ReleaseDate).ToString("dd/MM/yyyy")</p>
+                            <a class="btn btn-primary" asp-action="MovieDetails" asp-route-id="@item.Id">Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+        <!--Pagination-->
+        <nav class="p-4 small text-white-50">
+            <span>Page</span> @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) <Span>of</Span> @Model.PageCount
+
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new X.PagedList.Web.Common.PagedListRenderOptions
+            {
+             DisplayLinkToIndividualPages = true,
+             DisplayPageCountAndCurrentLocation = false,
+             MaximumPageNumbersToDisplay = 10,
+             LiElementClasses = new string[] { "page-item" },
+             PageClasses = new string[] { "page-link" },
+            })
+        </nav>
+
+
+    </section>
+}
+
+
+@section scripts {
+ 
+}

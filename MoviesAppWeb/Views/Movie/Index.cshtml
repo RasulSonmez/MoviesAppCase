@@ -1,0 +1,106 @@
+﻿
+@using MoviesAppWeb.Helper
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+
+@model IPagedList<Entities.Models.Movie>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Movies</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Cover Image
+            </th>
+            <th>
+               Title
+            </th>
+            <th>
+                Summary
+            </th>
+
+            <th>
+                ReleaseDate
+            </th>
+
+            <th>
+                MovieCategory
+            </th>
+            <th>
+                CreatedAt
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img asp-append-version="true" class="img-fluid" src="@item.CoverImageFilePath" alt="Alternate Text" style="height:70px;" />
+                </td>
+                <td>
+                    @{
+                        int maxLength = 30;
+                    }
+                    @StringHelper.Truncate(item.Title, maxLength)
+                </td>
+                <td>
+
+                    @StringHelper.Truncate(item.Summary, maxLength) ...
+
+                </td>
+
+                <td>
+                    @Convert.ToDateTime(item.ReleaseDate).ToString("dd/MM/yyyy")
+
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.MovieCategory.Name)
+                </td>
+                <td>
+                    @Convert.ToDateTime(item.CreatedAt).ToString("dd/MM/yyyy")
+
+                </td>
+
+                <td>
+                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a class="btn btn-success" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a class="btn btn-danger" onclick="confirmDeleteMovie('@item.Id')">Delete</a>
+                </td>
+            </tr>
+        }
+
+        <tr>
+            <td>
+                <!--Pagination-->
+                <nav class="p-4 small text-white-50">
+                    <span>Page</span> @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) <Span>of</Span> @Model.PageCount
+
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new X.PagedList.Web.Common.PagedListRenderOptions
+                    {
+                     DisplayLinkToIndividualPages = true,
+                     DisplayPageCountAndCurrentLocation = false,
+                     MaximumPageNumbersToDisplay = 10,
+                     LiElementClasses = new string[] { "page-item" },
+                     PageClasses = new string[] { "page-link " },
+                    })
+                </nav>
+            </td>
+        </tr>
+     
+    </tbody>
+
+</table>
+

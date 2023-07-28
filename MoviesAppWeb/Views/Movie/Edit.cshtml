@@ -1,0 +1,101 @@
+﻿@model Entities.Models.Movie
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Movie</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CoverImageFilePath" />
+            <input type="hidden" asp-for="CreatedAt" />
+            <input type="hidden" asp-for="CreatedById" />
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                        {
+                            <li>@error.ErrorMessage</li>
+                        }
+                    </ul>
+                </div>
+            }
+
+            <div class="form-group mb-3">
+                <label asp-for="MovieCategoryId" class="control-label"></label>
+                <select asp-for="MovieCategoryId" class="form-control" asp-items="ViewBag.MovieCategoryId"></select>
+                <span asp-validation-for="MovieCategoryId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Summary" class="control-label"></label>
+                <input asp-for="Summary" class="form-control" />
+                <span asp-validation-for="Summary" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="ReleaseDate" class="control-label"></label>
+                <input asp-for="ReleaseDate" class="form-control" onfocus="(this.type='date')" />
+                <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group mb-3">
+                <label asp-for="CoverImageFilePath" class="control-label"></label>
+                <div class="col-6 mb-4">
+                    <img asp-append-version="true" class="img-fluid" src="@Model.CoverImageFilePath" style="height:100px;" />
+                </div>
+
+                <input asp-for="CoverImageFile" class="form-control" />
+
+                <span asp-validation-for="CoverImageFilePath" class="text-danger"></span>
+            </div>
+
+
+
+
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        CKEDITOR.replace('Description', {
+            height: 250,
+            extraPlugins: 'colorbutton,colordialog',
+            removeButtons: 'PasteFromWord'
+        });
+    </script>
+}

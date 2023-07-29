@@ -30,8 +30,12 @@ namespace MoviesAppWeb.Controllers
         // GET: MovieCategory
         public async Task<IActionResult> Index()
         {
-              return _context.MovieCategories != null ? 
-                          View(await _context.MovieCategories.Where(a=> a.DeletedAt == null).OrderByDescending(c => c.CreatedAt).ToListAsync()) :
+            var userName = User.Identity.Name;
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.UserName == userName);
+
+
+            return _context.MovieCategories != null ? 
+                          View(await _context.MovieCategories.Where(a=> a.DeletedAt == null && a.CreatedById == user.Id).OrderByDescending(c => c.CreatedAt).ToListAsync()) :
                           Problem("Entity set 'ApplicationDbContext.MovieCategories'  is null.");
         }
 

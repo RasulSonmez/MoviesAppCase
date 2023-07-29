@@ -10,7 +10,8 @@ using MoviesAppWeb.Data;
 using Microsoft.AspNetCore.Authorization;
 using X.PagedList;
 using NLog;
-
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace MoviesAppWeb.Controllers
 {
@@ -143,8 +144,7 @@ namespace MoviesAppWeb.Controllers
             {
                 return Unauthorized();
             }
-
-
+     
             ViewData["MovieCategoryId"] = new SelectList(_context.MovieCategories.Where(a => a.DeletedAt == null), "Id", "Name");
             return View(movie);
         }
@@ -159,18 +159,7 @@ namespace MoviesAppWeb.Controllers
                 return NotFound();
             }
 
-            var userName = User.Identity.Name;
-            var user = _context.Users.FirstOrDefault(a => a.UserName == userName);
-            var movieFromDb =  _context.Movies.Find(id);
-            if (movieFromDb == null)
-            {
-                return NotFound();
-            }
-            if (movieFromDb.CreatedById != user.Id)
-            {
-                return Unauthorized();
-            }
-
+           ModelState.Remove("CoverImageFile");
 
             if (ModelState.IsValid)
             {
@@ -206,7 +195,8 @@ namespace MoviesAppWeb.Controllers
                     #endregion
 
 
-                 
+                    var userName = User.Identity.Name;
+                    var user = _context.Users.FirstOrDefault(a => a.UserName == userName);
                     movie.ModifiedAt = DateTime.Now;
                     movie.ModifiedById = user.Id;
 

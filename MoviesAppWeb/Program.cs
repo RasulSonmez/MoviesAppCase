@@ -7,7 +7,7 @@ using NLog.Web;
 using System;
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
-logger.Debug("init main");
+logger.Info("init main");
 
 try
 {
@@ -16,7 +16,7 @@ try
 
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-    //LogManager.Configuration.Variables["connectionString"] = connectionString;
+    LogManager.Configuration.Variables["connectionString"] = connectionString;
 
 
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -30,7 +30,7 @@ try
     // NLog: Setup NLog for Dependency injection
     builder.Logging.ClearProviders();
 
-    builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+    builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Information);
 
     builder.Host.UseNLog();
 

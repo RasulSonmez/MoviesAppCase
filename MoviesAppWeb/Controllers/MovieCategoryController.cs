@@ -80,6 +80,14 @@ namespace MoviesAppWeb.Controllers
             {
                 return NotFound();
             }
+
+            var userName = User.Identity.Name;
+            var user = _context.Users.FirstOrDefault(a => a.UserName == userName);
+            if (movieCategory.CreatedById != user.Id)
+            {
+                return Unauthorized();
+            }
+
             return View(movieCategory);
         }
 

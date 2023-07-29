@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Entities.Models;
 using MoviesAppWeb.Data;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using X.PagedList;
 
 namespace MoviesAppWeb.Controllers
 {
@@ -22,7 +24,7 @@ namespace MoviesAppWeb.Controllers
         public MovieCategoryController(ILogger<MovieCategoryController> logger, ApplicationDbContext context)
         {
             _logger = logger;
-            _logger.LogDebug(1, "NLog injected into HomeController");
+            _logger.LogDebug(1, "NLog injected into moviecategory");
 
             _context = context;
         }
@@ -33,10 +35,9 @@ namespace MoviesAppWeb.Controllers
             var userName = User.Identity.Name;
             var user = await _context.Users.FirstOrDefaultAsync(a => a.UserName == userName);
 
+            var movieCategories = await _context.MovieCategories.Where(a => a.DeletedAt == null && a.CreatedById == user.Id).OrderByDescending(c => c.CreatedAt).ToListAsync();
+            return View(movieCategories);
 
-            return _context.MovieCategories != null ? 
-                          View(await _context.MovieCategories.Where(a=> a.DeletedAt == null && a.CreatedById == user.Id).OrderByDescending(c => c.CreatedAt).ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.MovieCategories'  is null.");
         }
 
      
@@ -54,6 +55,11 @@ namespace MoviesAppWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userName = User.Identity.Name;
+                var user = _context.Users.FirstOrDefault(a => a.UserName == userName);
+                movieCategory.CreatedAt = DateTime.Now;
+                movieCategory.CreatedById = user.Id;
+
                 _context.Add(movieCategory);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
